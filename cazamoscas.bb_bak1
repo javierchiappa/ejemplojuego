@@ -1,0 +1,75 @@
+
+Graphics3D 800,600
+SetBuffer BackBuffer()
+
+Include "keyconstants.bb"
+
+camera_pivot = CreatePivot(nave)
+camara = CreateCamera(camera_pivot)
+
+light=CreateLight()
+escena=LoadMesh ("escena1.3ds")
+nave=LoadMesh("nave2.3ds")
+PositionEntity nave,0,5,0
+PositionEntity camara,0,5,10
+
+PointEntity camara,nave
+
+
+While Not KeyHit(1)
+
+
+PointEntity camara,camera_pivot
+
+PositionEntity nave,EntityX (camera_pivot), EntityY (camera_pivot),EntityZ (camera_pivot)
+PointEntity camara,nave
+
+	
+
+	If KeyDown(200) Then 
+	 TurnEntity nave,-1,0,0;up
+	 TurnEntity camera_pivot,-1,0,0
+	EndIf
+	
+	If KeyDown(208);down
+     TurnEntity nave,1,0,0
+	 TurnEntity camera_pivot,1,0,0
+	EndIf 
+
+
+	If KeyDown(203) Then ;left
+    	TurnEntity nave,0,0,-1
+	    TurnEntity camera_pivot,0,0,-1
+        roty=roty+1
+    ;   	 RotateEntity nave,0,roty,0
+	 ;   RotateEntity camera_pivot,0,roty,0 
+	EndIf
+	
+	If KeyDown(205) Then ;right
+	 TurnEntity nave,0,0,1
+	 TurnEntity camera_pivot,0,0,1
+	 roty=roty-1
+     ;RotateEntity nave,0,roty,0
+     ;RotateEntity camera_pivot,0,roty,0  	
+	EndIf
+     
+         
+
+If (KeyDown(key_A)) Then
+
+MoveEntity camera_pivot,0,0,-0.5
+End If
+
+
+If (KeyDown(key_Z)) Then
+
+MoveEntity camera_pivot,0,0,2
+End If
+
+
+UpdateWorld
+RenderWorld
+
+Flip
+Wend
+End
